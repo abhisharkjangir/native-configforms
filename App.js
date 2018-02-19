@@ -1,18 +1,22 @@
 import React from 'react';
 import { StyleSheet, Text, View ,Alert} from 'react-native';
-import { TextInput, Button } from 'react-native';
+import { TextInput, Button, ScrollView } from 'react-native';
 
 import formjson from './formjson';
 import TextBox from './TextBox';
 import TextAreaBox from './TextAreaBox';
 import SelectBox from './SelectBox';
 import PasswordBox from './PasswordBox'
+import CheckBox from './CheckBox';
+import RadioButton from './RadioButton';
+import MyDatePicker from './DatePicker';
 
 const form = formjson.form;
 
 const styles = StyleSheet.create({
   container: {
-    flex : 1,
+    marginTop : 20,
+    // flex : 1,
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'center',
@@ -69,6 +73,27 @@ const MapFormElements = (element, state, changeHandler) => {
         changeHandler : changeHandler
       }
       return <PasswordBox {...passwordAttr}/>;
+    case 'checkbox':
+      let checkboxAttr = {
+        element : element,
+        state : state,
+        changeHandler : changeHandler
+      }
+      return <CheckBox {...checkboxAttr}/>;
+      case 'radio':
+        let radioAttr = {
+          element : element,
+          state : state,
+          changeHandler : changeHandler
+        }
+        return <RadioButton {...radioAttr}/>;
+      case 'date':
+        let dateAttr = {
+          element : element,
+          state : state,
+          changeHandler : changeHandler
+        }
+        return <MyDatePicker {...dateAttr}/>;
     default:
       return null;
   }
@@ -83,16 +108,25 @@ export default class App extends React.Component {
   }
 
   componentWillMount(){
-    form.elements.map(element => this.setState({[element.key] : element.value}))
-
+    form.elements.map(element => {
+      if(element.element == 'checkbox'){
+        return this.setState({[element.key] : element.list})
+      } else if (element.element == 'radio') {
+        let selected = element.list.filter(item => item.checked === true)
+        return this.setState({[element.key] : selected[0]? selected[0].value : undefined })
+      } else {
+        return this.setState({[element.key] : element.value})
+      }
+    })
   }
 
   componentDidMount(){
-
+    // console.log(this.state);
   }
 
   changeHandler (change,key) {
     this.setState({[key] : change})
+    // console.log(change);
   }
 
   submitHandler() {
@@ -104,6 +138,7 @@ export default class App extends React.Component {
 
     return (
       <View style={styles.container}>
+        <ScrollView>
         <Text style={styles.heading}>Native ConfigForms</Text>
         <Text style={styles.subheading}>{formjson.form.title}</Text>
 
@@ -116,6 +151,7 @@ export default class App extends React.Component {
             color="#000"
           />
         </View>
+        </ScrollView>
       </View>
     );
   }

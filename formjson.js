@@ -1,6 +1,6 @@
 export default {
   "form": {
-    "title": "Demo Configrable Form",
+    "title": "Demo : Configrable Form",
     "id": "demo1",
     "submit": {
       "method": "POST", // PUT or POST
@@ -8,11 +8,11 @@ export default {
     },
     "elements": [
       {
-        "label": "Name",
+        "label": "Username",
         "element": "text", // email, password, file & url
         "key": "name", // Unique identifier
         "placeholder": "Enter your good name",
-        "value": "Abhishar",
+        "value": "",
         "disable": false, // true or false
         "validations": {
           require: [
@@ -65,8 +65,8 @@ export default {
         "label": "Gender",
         "element": "select",
         "key": "gender", // Unique identifier
-        "value": 'm',
-        "disable": false, //true or false
+        "value": "m",
+        "disable": true, //true or false
         "multiple": false, //true or false
         "placeholder": "Select Gender",
         "options": {
@@ -111,6 +111,12 @@ export default {
             "value": "angular",
             "checked": false, //true or false
             "disable": true //true or false
+          },{
+            "id": "3",
+            "name": "Javascript",
+            "value": "javascript",
+            "checked": true, //true or false
+            "disable": true //true or false
           }
         ],
         "method": "GET",
@@ -124,21 +130,21 @@ export default {
           ]
         }
       }, {
-        "label": "Adult",
+        "label": "Age",
         "element": "radio",
-        "key": "adult", // Unique identifier
+        "key": "age", // Unique identifier
         "disable": false, //true or false
         "list": [
           {
             "id": "1",
-            "name": "Yes",
-            "value": "yes",
+            "name": "20-25",
+            "value": "20-25",
             "checked": false, //true or false
             "disable": false //true or false
           },{
             "id": "2",
-            "name": "No",
-            "value": "no",
+            "name": "26-30",
+            "value": "26-30",
             "checked": false, //true or false
             "disable": false //true or false
           }
@@ -181,14 +187,15 @@ export default {
           ]
         }
       }, {
-        "label": "",
+        "label": "Date",
         "element": "date",
-        "key": "", // Unique identifier
-        "value": "",
+        "key": "date", // Unique identifier
+        "value": new Date(),
+        placeholder : "Select Date",
         "disable": false, // true or false
-        "from": "",
+        "from": undefined,
         "today": "",
-        "to": "",
+        "to": "20-02-2018",
         "format": "DD-MM-YYYY",
         "validations": {
           require: [
@@ -199,9 +206,9 @@ export default {
           ]
         }
       }, {
-        "label": "",
+        "label": "Type",
         "element": "autocomplete",
-        "key": "", // Unique identifier
+        "key": "type", // Unique identifier
         "disable": true, // true or false
         "min": "", //default 3 if non is given
         "endpoint": "",
